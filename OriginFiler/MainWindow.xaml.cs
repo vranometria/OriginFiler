@@ -27,12 +27,11 @@ namespace OriginFiler
 
         private TreeViewItem CreateTreeItem(HierarchyInfo hierarchyInfo) 
         {
-            TreeViewItem item = new TreeViewItem() 
+            TreeViewItem item = new TreeViewItem()
             {
                 Header = hierarchyInfo.Name,
-                ContextMenu = new ContextMenu(),
                 Tag = hierarchyInfo,
-            };
+            }; ;
 
             MenuItem addItem = new() { Header = "Add" };
             addItem.Click += delegate(object sender, RoutedEventArgs e) 
@@ -45,7 +44,24 @@ namespace OriginFiler
                 }
             };
 
-            item.ContextMenu.Items.Add(addItem);
+            MenuItem openItem = new() { Header = "Open" };
+            openItem.Click += delegate(object sender, RoutedEventArgs e)
+            {
+                HierarchyInfo info = (HierarchyInfo)item.Tag;
+                if (!string.IsNullOrEmpty(info.FolderPath))
+                {
+                    TabItem tabItem = new TabItem {
+                        Header = info.Name,
+                        Content = new TabContent(info.FolderPath),
+                    };
+                    Tab.Items.Add(tabItem);
+                }
+            };
+
+            ContextMenu contextMenu = new();
+            contextMenu.Items.Add(addItem);
+            contextMenu.Items.Add(openItem);
+            item.ContextMenu = contextMenu;
 
             return item;
         }

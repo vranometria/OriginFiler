@@ -20,6 +20,8 @@
                 </ContextMenu>
             </TreeView.ContextMenu>
         </TreeView>
+        <TabControl x:Name="Tab" Margin="177,68,0,0">
+        </TabControl>
 
     </Grid>
 </Window>
