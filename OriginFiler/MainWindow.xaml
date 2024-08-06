@@ -20,7 +20,7 @@
                 </ContextMenu>
             </TreeView.ContextMenu>
         </TreeView>
-        <TabControl x:Name="Tab" Margin="135,26,0,0" Background="{StaticResource BackGroundColor}">
+        <TabControl x:Name="Tab" Margin="148,26,0,9" Background="{StaticResource BackGroundColor}">
         </TabControl>
 
     </Grid>

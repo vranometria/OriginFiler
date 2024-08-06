@@ -31,7 +31,16 @@ namespace OriginFiler
             {
                 Header = hierarchyInfo.Name,
                 Tag = hierarchyInfo,
-            }; ;
+            };
+            item.MouseDoubleClick += delegate(object sender, MouseButtonEventArgs e)
+            {
+                HierarchyInfo info = (HierarchyInfo)item.Tag;
+                if (!string.IsNullOrEmpty(info.FolderPath))
+                {
+                    OpenTab(info);
+                }
+            };
+           
 
             MenuItem addItem = new() { Header = "Add" };
             addItem.Click += delegate(object sender, RoutedEventArgs e) 
@@ -48,14 +57,7 @@ namespace OriginFiler
             openItem.Click += delegate(object sender, RoutedEventArgs e)
             {
                 HierarchyInfo info = (HierarchyInfo)item.Tag;
-                if (!string.IsNullOrEmpty(info.FolderPath))
-                {
-                    TabItem tabItem = new TabItem {
-                        Header = info.Name,
-                        Content = new TabContent(info.FolderPath),
-                    };
-                    Tab.Items.Add(tabItem);
-                }
+                if (!string.IsNullOrEmpty(info.FolderPath)){ OpenTab(info); }
             };
 
             ContextMenu contextMenu = new();
@@ -64,6 +66,17 @@ namespace OriginFiler
             item.ContextMenu = contextMenu;
 
             return item;
+        }
+
+        private void OpenTab(HierarchyInfo hierarchyInfo) 
+        {
+            TabItem tabItem = new TabItem
+            {
+                Header = hierarchyInfo.Name,
+                Content = new TabContent(hierarchyInfo.FolderPath),
+            };
+            Tab.Items.Add(tabItem);
+            Tab.SelectedItem = tabItem;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
