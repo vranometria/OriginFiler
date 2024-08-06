@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OriginFiler.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -20,15 +21,16 @@ namespace OriginFiler.Views
     /// </summary>
     public partial class ObjectView : UserControl
     {
-        public string ObjectPath { get; private set; }
+        private ObjectInfo ObjectInfo { get; set; }
 
-        public string ObjectName { get; private set; } 
+        public string ObjectPath => ObjectInfo.ObjectPath;
+
+        public string ObjectName => ObjectInfo.ObjectName;
 
         public ObjectView(string objectPath)
         {
             InitializeComponent();
-            ObjectPath = objectPath;
-            ObjectName = Path.GetFileName(objectPath);
+            ObjectInfo = new ObjectInfo(objectPath);
             ObjectNameLabel.Content = ObjectName;
         }
     }

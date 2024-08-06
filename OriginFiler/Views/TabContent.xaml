@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ListView x:Name="ObjectListView" HorizontalAlignment="Left" Margin="10,63,0,10" Width="780" d:ItemsSource="{d:SampleData ItemCount=5}">
+        <ListView x:Name="ObjectListView" Margin="10,63,10,10" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
@@ -15,8 +15,8 @@
             </ListView.View>
         </ListView>
         <Grid HorizontalAlignment="Center" Height="58" VerticalAlignment="Top" Width="800">
-            <TextBox x:Name="FolderPathTextBox" Height="19" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top"/>
-            <TextBox x:Name="NameFilterTextBox" HorizontalAlignment="Left" Height="19" Margin="246,39,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="554"/>
+            <TextBox x:Name="FolderPathTextBox" Height="19" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+            <TextBox x:Name="NameFilterTextBox" TextWrapping="Wrap" Text="" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="288"/>
         </Grid>
 
     </Grid>
