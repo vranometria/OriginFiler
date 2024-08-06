@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.IO;
 
 namespace OriginFiler.Views
 {
@@ -23,6 +23,25 @@ namespace OriginFiler.Views
         public TabContent(string folderPath)
         {
             InitializeComponent();
+            OpenFolder(folderPath);
+            FolderPathTextBox.Text = folderPath;
+        }
+
+        /// <summary>
+        /// 指定したフォルダの中身を表示する
+        /// </summary>
+        /// <param name="folderPath"></param>
+        private void OpenFolder(string folderPath)
+        {
+            ObjectListView.Items.Clear();
+
+            // フォルダ内のファイルを取得
+            string[] files = Directory.GetFiles(folderPath);
+            string[] directories = Directory.GetDirectories(folderPath);
+            foreach (string file in files.Concat(directories))
+            {
+                ObjectListView.Items.Add(new ObjectView(file));
+            }
         }
     }
 }
