@@ -10,7 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
+using System.Diagnostics;
 using System.IO;
 
 namespace OriginFiler.Views
@@ -24,7 +24,13 @@ namespace OriginFiler.Views
         {
             InitializeComponent();
             OpenFolder(folderPath);
+            ChangeFolder(folderPath);
+        }
+
+        private void ChangeFolder(string folderPath)
+        {
             FolderPathTextBox.Text = folderPath;
+            OpenFolder(folderPath);
         }
 
         /// <summary>
@@ -35,12 +41,33 @@ namespace OriginFiler.Views
         {
             ObjectListView.Items.Clear();
 
-            // フォルダ内のファイルを取得
             string[] files = Directory.GetFiles(folderPath);
             string[] directories = Directory.GetDirectories(folderPath);
             foreach (string file in files.Concat(directories))
             {
-                ObjectListView.Items.Add(new ObjectView(file));
+                var view = new ObjectView(file);
+                view.MouseDoubleClick += delegate (object sender, MouseButtonEventArgs e)
+                {
+                    if (sender is ObjectView objectView)
+                    {
+                        try 
+                        {
+                            if (Directory.Exists(objectView.ObjectPath))
+                            {
+                                ChangeFolder(objectView.ObjectPath);
+                            }
+                            else if (File.Exists(objectView.ObjectPath))
+                            {
+                                Process.Start(objectView.ObjectPath);
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                    }
+                };
+                ObjectListView.Items.Add(view);
             }
         }
     }
