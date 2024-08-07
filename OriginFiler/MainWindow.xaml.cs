@@ -31,6 +31,7 @@ namespace OriginFiler
             {
                 Header = hierarchyInfo.Name,
                 Tag = hierarchyInfo,
+                Foreground = Brushes.White,
             };
             item.MouseDoubleClick += delegate(object sender, MouseButtonEventArgs e)
             {
@@ -96,6 +97,18 @@ namespace OriginFiler
             if (result == true)
             {
                 FolderTreeView.Items.Add(CreateTreeItem(inputWindow.Get));
+            }
+        }
+
+        private void TitleBarGrid_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+        }
+
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                DragMove();
             }
         }
     }
