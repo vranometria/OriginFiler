@@ -17,8 +17,7 @@ namespace OriginFiler
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        private MainViewModel mainViewModel = new MainViewModel();
+        private const string APP_DATA_FILE = "app.json";
 
         public MainWindow()
         {
@@ -80,6 +79,30 @@ namespace OriginFiler
             Tab.SelectedItem = tabItem;
         }
 
+        private void Save() 
+        {
+            List<HierarchyInfo> hierarchyInfos = new();
+            foreach (TreeViewItem item in FolderTreeView.Items)
+            {
+                HierarchyInfo hierarchyInfo = (HierarchyInfo)item.Tag;
+                hierarchyInfos.Add(SetHierarchy(item, hierarchyInfo));
+            }
+
+            AppData appData = new AppData() { Hierarchies = hierarchyInfos };
+            Util.WriteFile(APP_DATA_FILE, appData);
+        }
+
+        private HierarchyInfo SetHierarchy(TreeViewItem item, HierarchyInfo hierarchyInfo)
+        {
+            foreach (TreeViewItem child in item.Items)
+            {
+                HierarchyInfo childInfo = (HierarchyInfo)child.Tag;
+                hierarchyInfo.Hierarchies.Add(childInfo);
+                SetHierarchy(child, childInfo);
+            }
+            return hierarchyInfo;
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
         }
@@ -110,6 +133,16 @@ namespace OriginFiler
             {
                 DragMove();
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Save();
+        }
+
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

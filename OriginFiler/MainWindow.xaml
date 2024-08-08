@@ -7,13 +7,15 @@
         AllowsTransparency="True"
         xmlns:local="clr-namespace:OriginFiler"
         mc:Ignorable="d"
-        Title="Origin Filer" Height="450" Width="800" Loaded="Window_Loaded" Background="#424242" MouseDown="Window_MouseDown">
+        Title="Origin Filer" Height="450" Width="800" Loaded="Window_Loaded" Background="#424242" MouseDown="Window_MouseDown" Closed="Window_Closed">
     <Window.Resources>
         <SolidColorBrush x:Key="BackGroundColor" Color="#424242"></SolidColorBrush>
     </Window.Resources>
 
     <Grid>
-        <Grid Height="21" VerticalAlignment="Top" x:Name="TitleBarGrid" MouseDown="TitleBarGrid_MouseDown"/>
+        <Grid Height="21" VerticalAlignment="Top" x:Name="TitleBarGrid" MouseDown="TitleBarGrid_MouseDown">
+            <Button x:Name="CloseButton" Content="✖" Height="21" VerticalAlignment="Center" Background="{StaticResource BackGroundColor}" Foreground="White" HorizontalAlignment="Left" Width="24" Margin="776,0,0,0" Click="CloseButton_Click"/>
+        </Grid>
 
         <TreeView x:Name="FolderTreeView" ItemsSource="{Binding Items}" HorizontalAlignment="Left" Margin="0,26,0,0" Width="135" Background="{StaticResource BackGroundColor}">
             <TreeView.ContextMenu>
