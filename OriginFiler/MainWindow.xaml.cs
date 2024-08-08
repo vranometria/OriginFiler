@@ -19,7 +19,14 @@ namespace OriginFiler
     {
         private const string APP_DATA_FILE = "app.json";
 
+        /// <summary>アプリの設定データ</summary>
         private AppData AppData { get; set; } = new AppData();
+
+        /// <summary>ホットキーの操作クラス</summary>
+        private HotkeyHelper? HotkeyHelper;
+
+        /// <summary>ホットキーイベント</summary>
+        private EventHandler? HotkeyEvent;
 
         public MainWindow()
         {
@@ -70,6 +77,10 @@ namespace OriginFiler
             return item;
         }
 
+        /// <summary>
+        /// タブでフォルダの中身を表示する
+        /// </summary>
+        /// <param name="hierarchyInfo"></param>
         private void OpenTab(HierarchyInfo hierarchyInfo) 
         {
             TabItem tabItem = new TabItem
@@ -81,20 +92,26 @@ namespace OriginFiler
             Tab.SelectedItem = tabItem;
         }
 
+        /// <summary>
+        /// データを保存する
+        /// </summary>
         private void Save() 
         {
             List<HierarchyInfo> hierarchyInfos = new();
             foreach (TreeViewItem item in FolderTreeView.Items)
             {
                 HierarchyInfo hierarchyInfo = (HierarchyInfo)item.Tag;
-                hierarchyInfos.Add(Util.SetHierarchy(item, hierarchyInfo));
+                Util.SetHierarchy(item, hierarchyInfo);
+                hierarchyInfos.Add(hierarchyInfo);
             }
 
-            AppData appData = new AppData() { Hierarchies = hierarchyInfos };
-            Util.WriteFile(APP_DATA_FILE, appData);
+            AppData.Hierarchies = hierarchyInfos;
+            Util.WriteFile(APP_DATA_FILE, AppData);
         }
         
-
+        /// <summary>
+        /// データを読み込む
+        /// </summary>
         private void LoadData() 
         {
             AppData? appData = Util.ReadFile(APP_DATA_FILE);
@@ -123,17 +140,31 @@ namespace OriginFiler
             }
         }
 
+        /// <summary>
+        /// 画面読み込みイベント
+        /// ・設定の読み込み
+        /// ・ホットキーの設定
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             LoadData();
+
+            HotkeyEvent = (sender, e) =>
+            {
+                Show();
+                Activate();
+            };
+            HotkeyHelper = new HotkeyHelper(this, HotkeyEvent);
+            if (AppData.Hotkey.IsValid) { HotkeyHelper.Register(AppData.Hotkey.GetModifireKeys(), AppData.Hotkey.Key); }
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-            MenuItem menuItem = (MenuItem)sender;
-            HierarchyInfo treeItem = (HierarchyInfo)menuItem.DataContext;
-        }
-
+        /// <summary>
+        /// ツリービューの追加メニューイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TreeViewAddMenu_Click(object sender, RoutedEventArgs e)
         {
             InputWindow inputWindow = new InputWindow();
@@ -144,10 +175,11 @@ namespace OriginFiler
             }
         }
 
-        private void TitleBarGrid_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-        }
-
+        /// <summary>
+        /// メイン画面マウスダウンイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left)
@@ -156,14 +188,40 @@ namespace OriginFiler
             }
         }
 
+        /// <summary>
+        /// 画面終了イベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closed(object sender, EventArgs e)
         {
             Save();
+            HotkeyHelper?.Dispose();
         }
 
+        /// <summary>
+        /// 閉じるボタンイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        /// <summary>
+        /// ホットキーメニューイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void HotkeyMenu_Click(object sender, RoutedEventArgs e)
+        {
+            HotkeyWindow hotkeyWindow = new HotkeyWindow(AppData.Hotkey, HotkeyHelper);
+            hotkeyWindow.ShowDialog();
+            if(hotkeyWindow.IsApply)
+            {
+                AppData.Hotkey = hotkeyWindow.Hotkey;
+            }
         }
     }
 }

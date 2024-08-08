@@ -13,18 +13,26 @@
     </Window.Resources>
 
     <Grid>
-        <Grid Height="21" VerticalAlignment="Top" x:Name="TitleBarGrid" MouseDown="TitleBarGrid_MouseDown">
+        <Grid Height="21" VerticalAlignment="Top" x:Name="TitleBarGrid">
             <Button x:Name="CloseButton" Content="✖" Height="21" VerticalAlignment="Center" Background="{StaticResource BackGroundColor}" Foreground="White" HorizontalAlignment="Left" Width="24" Margin="776,0,0,0" Click="CloseButton_Click"/>
+            <Label Content="Origin Filer" HorizontalAlignment="Left" Height="28" VerticalAlignment="Center" Width="141" Margin="3,0,0,0" Foreground="White"/>
         </Grid>
+        <Menu Height="21" Margin="0,26,0,0" VerticalAlignment="Top" Background="{StaticResource BackGroundColor}">
+            <MenuItem Header="Menu" Foreground="White" Background="{StaticResource BackGroundColor}">
+                <MenuItem x:Name="HotkeyMenuItem" Header="Hotkey" Click="HotkeyMenu_Click" Background="{StaticResource BackGroundColor}" Foreground="White"></MenuItem>
+            </MenuItem>
+        </Menu>
 
-        <TreeView x:Name="FolderTreeView" ItemsSource="{Binding Items}" HorizontalAlignment="Left" Margin="0,26,0,0" Width="135" Background="{StaticResource BackGroundColor}">
+        <TreeView x:Name="FolderTreeView" ItemsSource="{Binding Items}" HorizontalAlignment="Left" Margin="0,52,0,0" Width="135" Background="{StaticResource BackGroundColor}">
             <TreeView.ContextMenu>
                 <ContextMenu>
-                    <MenuItem x:Name="TreeViewAddMenu" Header="Add" Click="TreeViewAddMenu_Click" Background="{StaticResource BackGroundColor}" Foreground="White"></MenuItem>
+                    <MenuItem x:Name="TreeViewAddMenu" Header="Add" Click="TreeViewAddMenu_Click" Background="{StaticResource BackGroundColor}" Foreground="White">
+                        <MenuItem x:Name="HotkeyMenu" Header="Hotkey" Click="HotkeyMenu_Click" Background="{StaticResource BackGroundColor}" Foreground="White" ></MenuItem>
+                    </MenuItem>
                 </ContextMenu>
             </TreeView.ContextMenu>
         </TreeView>
-        <TabControl x:Name="Tab" Margin="148,26,0,9" Background="{StaticResource BackGroundColor}">
+        <TabControl x:Name="Tab" Margin="148,52,0,4" Background="{StaticResource BackGroundColor}">
         </TabControl>
 
     </Grid>

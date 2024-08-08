@@ -9,5 +9,7 @@ namespace OriginFiler.Models
     public class AppData
     {
         public List<HierarchyInfo> Hierarchies { get; set; } = new List<HierarchyInfo>();
+
+        public Hotkey Hotkey { get; set; } = new Hotkey();
     }
 }
