@@ -40,17 +40,17 @@ namespace OriginFiler.Views
         private void OpenFolder(string folderPath)
         {
             ObjectListView.Items.Clear();
-
-            string[] files = Directory.GetFiles(folderPath);
-            string[] directories = Directory.GetDirectories(folderPath);
-            foreach (string file in files.Concat(directories))
+                        
+            try 
             {
-                var view = new ObjectView(file);
-                view.MouseDoubleClick += delegate (object sender, MouseButtonEventArgs e)
+                string[] files = Directory.GetFiles(folderPath);
+                string[] directories = Directory.GetDirectories(folderPath);
+                foreach (string file in files.Concat(directories))
                 {
-                    if (sender is ObjectView objectView)
+                    var view = new ObjectView(file);
+                    view.MouseDoubleClick += delegate (object sender, MouseButtonEventArgs e)
                     {
-                        try 
+                        if (sender is ObjectView objectView)
                         {
                             if (Directory.Exists(objectView.ObjectPath))
                             {
@@ -61,13 +61,13 @@ namespace OriginFiler.Views
                                 Process.Start(objectView.ObjectPath);
                             }
                         }
-                        catch(Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                        }
-                    }
+                    };
+                    ObjectListView.Items.Add(view);
                 };
-                ObjectListView.Items.Add(view);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }

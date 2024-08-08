@@ -19,6 +19,8 @@ namespace OriginFiler
     {
         private const string APP_DATA_FILE = "app.json";
 
+        private AppData AppData { get; set; } = new AppData();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -26,7 +28,7 @@ namespace OriginFiler
 
         private TreeViewItem CreateTreeItem(HierarchyInfo hierarchyInfo) 
         {
-            TreeViewItem item = new TreeViewItem()
+            TreeViewItem item = new()
             {
                 Header = hierarchyInfo.Name,
                 Tag = hierarchyInfo,
@@ -85,26 +87,45 @@ namespace OriginFiler
             foreach (TreeViewItem item in FolderTreeView.Items)
             {
                 HierarchyInfo hierarchyInfo = (HierarchyInfo)item.Tag;
-                hierarchyInfos.Add(SetHierarchy(item, hierarchyInfo));
+                hierarchyInfos.Add(Util.SetHierarchy(item, hierarchyInfo));
             }
 
             AppData appData = new AppData() { Hierarchies = hierarchyInfos };
             Util.WriteFile(APP_DATA_FILE, appData);
         }
+        
 
-        private HierarchyInfo SetHierarchy(TreeViewItem item, HierarchyInfo hierarchyInfo)
+        private void LoadData() 
         {
-            foreach (TreeViewItem child in item.Items)
+            AppData? appData = Util.ReadFile(APP_DATA_FILE);
+            if (appData != null)
             {
-                HierarchyInfo childInfo = (HierarchyInfo)child.Tag;
-                hierarchyInfo.Hierarchies.Add(childInfo);
-                SetHierarchy(child, childInfo);
+                AppData = appData;
+                BuildTreeView(AppData.Hierarchies);
+            }   
+        }
+
+        private void BuildTreeView(List<HierarchyInfo> hierarchyInfos, TreeViewItem? parent = null)
+        {
+            foreach (var hierarchyInfo in hierarchyInfos)
+            {
+                TreeViewItem item = CreateTreeItem(hierarchyInfo);
+                if(parent == null)
+                {
+                    FolderTreeView.Items.Add(item);
+                }
+                else
+                {
+                    parent.Items.Add(item);
+                }
+
+                BuildTreeView(hierarchyInfo.Hierarchies, item);
             }
-            return hierarchyInfo;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            LoadData();
         }
 
         private void MenuItem_Click(object sender, RoutedEventArgs e)
