@@ -1,5 +1,6 @@
 ﻿using OriginFiler.Models;
 using OriginFiler.Views;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -97,15 +98,7 @@ namespace OriginFiler
         /// </summary>
         private void Save() 
         {
-            List<HierarchyInfo> hierarchyInfos = new();
-            foreach (TreeViewItem item in FolderTreeView.Items)
-            {
-                HierarchyInfo hierarchyInfo = (HierarchyInfo)item.Tag;
-                Util.SetHierarchy(item, hierarchyInfo);
-                hierarchyInfos.Add(hierarchyInfo);
-            }
-
-            AppData.Hierarchies = hierarchyInfos;
+            AppData.Hierarchies = Util.CreateHierarchyInfos(FolderTreeView);
             Util.WriteFile(APP_DATA_FILE, AppData);
         }
         
@@ -118,25 +111,22 @@ namespace OriginFiler
             if (appData != null)
             {
                 AppData = appData;
-                BuildTreeView(AppData.Hierarchies);
+                AppData.Hierarchies.ForEach( rootInfo => {
+                    TreeViewItem rootItem = CreateTreeItem(rootInfo);
+                    FolderTreeView.Items.Add(rootItem);
+                    BuildTreeView(rootInfo.Hierarchies, rootItem);
+                });
             }   
         }
 
-        private void BuildTreeView(List<HierarchyInfo> hierarchyInfos, TreeViewItem? parent = null)
+        private void BuildTreeView(List<HierarchyInfo> childrenInfos, TreeViewItem parentItem)
         {
-            foreach (var hierarchyInfo in hierarchyInfos)
+            foreach (var childInfo in childrenInfos)
             {
-                TreeViewItem item = CreateTreeItem(hierarchyInfo);
-                if(parent == null)
-                {
-                    FolderTreeView.Items.Add(item);
-                }
-                else
-                {
-                    parent.Items.Add(item);
-                }
+                TreeViewItem childItem = CreateTreeItem(childInfo);
+                parentItem.Items.Add(childItem);
 
-                BuildTreeView(hierarchyInfo.Hierarchies, item);
+                BuildTreeView(childInfo.Hierarchies, childItem);
             }
         }
 
@@ -149,7 +139,10 @@ namespace OriginFiler
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            LoadData();
+            if(File.Exists(APP_DATA_FILE))
+            {                 
+                LoadData();
+            }
 
             HotkeyEvent = (sender, e) =>
             {

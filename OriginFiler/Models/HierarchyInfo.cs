@@ -12,6 +12,6 @@ namespace OriginFiler.Models
 
         public string FolderPath { get; set; } = "";
         
-        public List<HierarchyInfo> Hierarchies { get; set; } = new List<HierarchyInfo>();
+        public List<HierarchyInfo> Hierarchies { get; set; } = [];
     }
 }
