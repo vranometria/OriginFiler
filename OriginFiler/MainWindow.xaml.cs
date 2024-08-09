@@ -34,6 +34,11 @@ namespace OriginFiler
             InitializeComponent();
         }
 
+        /// <summary>
+        /// ツリービューアイテムを作成する
+        /// </summary>
+        /// <param name="hierarchyInfo"></param>
+        /// <returns></returns>
         private TreeViewItem CreateTreeItem(HierarchyInfo hierarchyInfo) 
         {
             TreeViewItem item = new()
@@ -42,6 +47,8 @@ namespace OriginFiler
                 Tag = hierarchyInfo,
                 Foreground = Brushes.White,
             };
+
+            //ダブルクリックでフォルダを開く
             item.MouseDoubleClick += delegate(object sender, MouseButtonEventArgs e)
             {
                 HierarchyInfo info = (HierarchyInfo)item.Tag;
@@ -50,8 +57,8 @@ namespace OriginFiler
                     OpenTab(info);
                 }
             };
-           
 
+            //右クリックメニュー(追加)
             MenuItem addItem = new() { Header = "Add" };
             addItem.Click += delegate(object sender, RoutedEventArgs e) 
             {
@@ -63,6 +70,7 @@ namespace OriginFiler
                 }
             };
 
+            //右クリックメニュー(開く)
             MenuItem openItem = new() { Header = "Open" };
             openItem.Click += delegate(object sender, RoutedEventArgs e)
             {
@@ -70,9 +78,26 @@ namespace OriginFiler
                 if (!string.IsNullOrEmpty(info.FolderPath)){ OpenTab(info); }
             };
 
+            //右クリックメニュー(削除)
+            MenuItem deleteItem = new() { Header = "Delete" };
+            deleteItem.Click += delegate(object sender, RoutedEventArgs e)
+            {
+                TreeViewItem? parentItem = item.Parent as TreeViewItem;
+                if (parentItem != null)
+                {
+                    parentItem.Items.Remove(item);
+                }
+                else 
+                {
+                    TreeView parent = (TreeView) item.Parent;
+                    parent.Items.Remove(item);
+                }
+            };
+
             ContextMenu contextMenu = new();
             contextMenu.Items.Add(addItem);
             contextMenu.Items.Add(openItem);
+            contextMenu.Items.Add(deleteItem);
             item.ContextMenu = contextMenu;
 
             return item;
