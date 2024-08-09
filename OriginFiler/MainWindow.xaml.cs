@@ -8,7 +8,10 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
+using System.Windows.Forms.Integration;
+using System.Runtime.InteropServices;
+using System.Timers;
+using System.Windows.Threading;
 
 namespace OriginFiler
 {
@@ -27,6 +30,16 @@ namespace OriginFiler
 
         /// <summary>ホットキーイベント</summary>
         private EventHandler? HotkeyEvent;
+
+        [DllImport("user32.dll")]
+        public static extern bool GetCursorPos(out POINT lpPoint);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct POINT
+        {
+            public int X;
+            public int Y;
+        }
 
         public MainWindow()
         {
@@ -159,6 +172,15 @@ namespace OriginFiler
             }
         }
 
+        private void MoveToMousePointerPosition()
+        {
+            if (GetCursorPos(out POINT point))
+            {
+                Left = point.X;
+                Top = point.Y;
+            }
+        }
+
         /// <summary>
         /// 画面読み込みイベント
         /// ・設定の読み込み
@@ -175,8 +197,16 @@ namespace OriginFiler
 
             HotkeyEvent = (sender, e) =>
             {
-                Show();
-                Activate();
+                Hide();
+                DispatcherTimer timer = new() { Interval = TimeSpan.FromMilliseconds(1) };
+                timer.Tick += (sender, e) =>
+                {
+                    timer.Stop();
+                    MoveToMousePointerPosition();
+                    Show();
+                    Activate();
+                };
+                timer.Start();
             };
             HotkeyHelper = new HotkeyHelper(this, HotkeyEvent);
             if (AppData.Hotkey.IsValid) { HotkeyHelper.Register(AppData.Hotkey.GetModifireKeys(), AppData.Hotkey.Key); }
