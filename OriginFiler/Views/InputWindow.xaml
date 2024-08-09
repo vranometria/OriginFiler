@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OriginFiler.Views"
         mc:Ignorable="d"
-        Title="フォルダ名" Height="163" Width="352">
+        Title="フォルダ階層編集" Height="188" Width="343">
     <Grid>
-        <TextBox x:Name="NameInputBox" Height="21" Margin="10,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-        <Grid Margin="10,74,10,10">
-            <Button x:Name="OkButton" Content="OK" HorizontalAlignment="Left" Height="44" Margin="10,10,0,0" VerticalAlignment="Top" Width="70" Background="White" Click="OkButton_Click"/>
-            <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" Height="44" Margin="85,10,0,0" VerticalAlignment="Top" Width="70" Background="White" Click="CancelButton_Click"/>
+        <Label Content="階層名" HorizontalAlignment="Left" Height="26" Margin="19,8,0,0" VerticalAlignment="Top" Width="47"/>
+        <TextBox x:Name="NameInputBox" Height="21" Margin="67,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <Label Content="フォルダパス" HorizontalAlignment="Left" Height="26" Margin="0,31,0,0" VerticalAlignment="Top" Width="69"/>
+        <TextBox x:Name="FolderPathInputBox" Height="21" Margin="67,36,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
+        <Grid Margin="10,0,10,10" Height="59" VerticalAlignment="Bottom">
+            <Button x:Name="OkButton" Content="OK" Margin="0,0,85,10" Background="White" Click="OkButton_Click" Height="44" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="70"/>
+            <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Right" Height="44" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="70" Background="White" Click="CancelButton_Click"/>
         </Grid>
-        <TextBox x:Name="FolderPathInputBox" Height="21" Margin="10,36,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

@@ -23,14 +23,14 @@
             </MenuItem>
         </Menu>
 
-        <TreeView x:Name="FolderTreeView" ItemsSource="{Binding Items}" HorizontalAlignment="Left" Margin="0,52,0,0" Width="135" Background="{StaticResource BackGroundColor}">
+        <TreeView x:Name="FolderTreeView" ItemsSource="{Binding Items}" Margin="0,52,571,0" Background="{StaticResource BackGroundColor}">
             <TreeView.ContextMenu>
                 <ContextMenu>
                     <MenuItem x:Name="TreeViewAddMenu" Header="Add" Click="TreeViewAddMenu_Click" Background="{StaticResource BackGroundColor}" Foreground="White"/>
                 </ContextMenu>
             </TreeView.ContextMenu>
         </TreeView>
-        <TabControl x:Name="Tab" Margin="148,52,0,4" Background="{StaticResource BackGroundColor}">
+        <TabControl x:Name="Tab" Margin="0,52,0,4" Background="{StaticResource BackGroundColor}" HorizontalAlignment="Right" Width="566">
         </TabControl>
 
     </Grid>
