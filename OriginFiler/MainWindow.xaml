@@ -7,7 +7,7 @@
         AllowsTransparency="True"
         xmlns:local="clr-namespace:OriginFiler"
         mc:Ignorable="d"
-        Title="Origin Filer" Height="450" Width="800" Loaded="Window_Loaded" Background="#424242" MouseDown="Window_MouseDown" Closed="Window_Closed">
+        Title="Origin Filer" Height="450" Width="800" Loaded="Window_Loaded" Background="#424242" MouseDown="Window_MouseDown" Closed="Window_Closed" KeyDown="Window_KeyDown">
     <Window.Resources>
         <SolidColorBrush x:Key="BackGroundColor" Color="#424242"></SolidColorBrush>
     </Window.Resources>

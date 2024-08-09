@@ -9,7 +9,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 
 namespace OriginFiler
 {
@@ -144,6 +143,11 @@ namespace OriginFiler
             }   
         }
 
+        /// <summary>
+        /// ツリービューを表示
+        /// </summary>
+        /// <param name="childrenInfos"></param>
+        /// <param name="parentItem"></param>
         private void BuildTreeView(List<HierarchyInfo> childrenInfos, TreeViewItem parentItem)
         {
             foreach (var childInfo in childrenInfos)
@@ -239,6 +243,20 @@ namespace OriginFiler
             if(hotkeyWindow.IsApply)
             {
                 AppData.Hotkey = hotkeyWindow.Hotkey;
+            }
+        }
+
+        /// <summary>
+        /// メイン画面キーダウンイベント
+        ///  ・ホットキーを設定している場合はescapeキーでウインドウを非表示
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape && AppData.Hotkey.IsValid )
+            {
+                Hide();
             }
         }
     }
