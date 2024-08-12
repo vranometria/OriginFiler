@@ -64,5 +64,27 @@ namespace OriginFiler
             };
             return openExploreItem;
         }
+
+
+        /// <summary>
+        /// タブページのコンテキストメニューを作成する
+        /// </summary>
+        /// <param name="tab"></param>
+        /// <param name="tabItem"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        internal static ContextMenu CreateTabContextMenu(TabControl tab, TabItem tabItem)
+        {
+            //閉じるメニュー
+            MenuItem closeItem = new() { Header = "Close Tab" };
+            closeItem.Click += delegate (object sender, RoutedEventArgs e)
+            {
+                tab.Items.Remove(tabItem);
+            };
+
+            ContextMenu contextMenu = new();
+            contextMenu.Items.Add(closeItem);
+            return contextMenu;
+        }
     }
 }

@@ -123,11 +123,12 @@ namespace OriginFiler
         /// <param name="hierarchyInfo"></param>
         private void OpenTab(HierarchyInfo hierarchyInfo) 
         {
-            TabItem tabItem = new TabItem
+            TabItem tabItem = new()
             {
                 Header = hierarchyInfo.Name,
                 Content = new TabContent(hierarchyInfo.FolderPath),
             };
+            tabItem.ContextMenu = Util.CreateTabContextMenu(Tab, tabItem);
             Tab.Items.Add(tabItem);
             Tab.SelectedItem = tabItem;
         }
