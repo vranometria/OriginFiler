@@ -10,6 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\reload.png" />
+    <None Remove="Images\upper.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="D:\OneDrive\Desktop\Readme.md">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
@@ -20,6 +25,15 @@
     <Reference Include="WindowsFormsIntegration">
       <HintPath>..\..\..\..\..\..\Program Files\Reference Assemblies\Microsoft\Framework\v3.0\WindowsFormsIntegration.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\reload.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\upper.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
 </Project>

@@ -92,5 +92,23 @@ namespace OriginFiler.Views
             view.SortDescriptions.Add(currentSort);
             view.Refresh();
         }
+
+        private void UpperDirectoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            DirectoryInfo? parentDir = Directory.GetParent(FolderPathTextBox.Text);
+            if (parentDir != null)
+            {
+                ChangeFolder(parentDir.FullName);
+            }
+        }
+
+        private void ReloadButton_Click(object sender, RoutedEventArgs e)
+        {
+            DirectoryInfo? currentDir = new DirectoryInfo(FolderPathTextBox.Text);
+            if (currentDir.Exists)
+            {
+                ChangeFolder(currentDir.FullName);
+            }
+        }
     }
 }
