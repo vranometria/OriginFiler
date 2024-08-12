@@ -12,6 +12,35 @@ namespace OriginFiler
 {
     public static class Util
     {
+        /// <summary>
+        /// ファイルを実行する
+        /// </summary>
+        /// <param name="filePath"></param>
+        public static void OpenFile(string filePath)
+        {
+            try 
+            {
+                ProcessStartInfo processStartInfo = new()
+                {
+                    FileName = filePath,
+                    UseShellExecute = true,
+                };
+                Process.Start(processStartInfo);
+            }catch(Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// エクスプローラーでフォルダを開く
+        /// </summary>
+        /// <param name="folderPath"></param>
+        public static void OpenExplorer(string folderPath)
+        {
+            Process.Start("EXPLORER.EXE", folderPath);
+        }
+
         public static void WriteFile(string outputFilePath, AppData appData)
         {
             //jsonに変換する

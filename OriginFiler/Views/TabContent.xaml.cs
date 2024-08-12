@@ -23,9 +23,12 @@ namespace OriginFiler.Views
     /// </summary>
     public partial class TabContent : UserControl
     {
+        private string FolderPath { get; set; }
+
         public TabContent(string folderPath)
         {
             InitializeComponent();
+            FolderPath = folderPath;
             ChangeFolder(folderPath);
         }
 
@@ -60,7 +63,7 @@ namespace OriginFiler.Views
                             }
                             else if (File.Exists(objectView.ObjectPath))
                             {
-                                Process.Start(objectView.ObjectPath);
+                                Util.OpenFile(objectView.ObjectPath);
                             }
                         }
                     };
@@ -109,6 +112,11 @@ namespace OriginFiler.Views
             {
                 ChangeFolder(currentDir.FullName);
             }
+        }
+
+        private void OpenExploreMenuitem_Click(object sender, RoutedEventArgs e)
+        {
+            Util.OpenExplorer(FolderPath);
         }
     }
 }
