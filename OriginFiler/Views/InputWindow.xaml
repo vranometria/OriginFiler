@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OriginFiler.Views"
         mc:Ignorable="d"
-        Title="フォルダ階層編集" Height="188" Width="343">
+        Title="フォルダ階層編集" Height="188" Width="568">
     <Grid>
         <Label Content="階層名" HorizontalAlignment="Left" Height="26" Margin="19,8,0,0" VerticalAlignment="Top" Width="47"/>
         <TextBox x:Name="NameInputBox" Height="21" Margin="67,10,10,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
