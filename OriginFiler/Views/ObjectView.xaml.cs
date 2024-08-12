@@ -21,15 +21,19 @@ namespace OriginFiler.Views
     /// </summary>
     public partial class ObjectView : UserControl
     {
-        private ObjectInfo ObjectInfo { get; set; }
+        public ObjectInfo? ObjectInfo { get; private set; }
 
-        public string ObjectPath => ObjectInfo.ObjectPath;
+        public string? ObjectPath => ObjectInfo?.ObjectPath;
 
-        public string ObjectName => ObjectInfo.ObjectName;
+        public string ObjectName => $"{ObjectInfo?.ObjectName}";
 
-        public ObjectView(string objectPath)
+        public ObjectView()
         {
             InitializeComponent();
+        }
+
+        public ObjectView(string objectPath):this()
+        {
             ObjectInfo = new ObjectInfo(objectPath);
             ObjectNameLabel.Content = ObjectName;
         }

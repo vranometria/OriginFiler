@@ -10,7 +10,17 @@
         <ListView x:Name="ObjectListView" Margin="10,63,10,10" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn>
+                        <GridViewColumnHeader Content="ファイル名" Tag="ObjectName" Click="GridViewColumnHeader_Click"/>
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ContentPresenter Content="{Binding ObjectView}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding ObjectType}" Width="auto">
+                        <GridViewColumnHeader Content="種類" Tag="ObjectType" Click="GridViewColumnHeader_Click"/>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>

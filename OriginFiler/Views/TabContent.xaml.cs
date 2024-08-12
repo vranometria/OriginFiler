@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Diagnostics;
 using System.IO;
+using OriginFiler.Models;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace OriginFiler.Views
 {
@@ -39,7 +42,7 @@ namespace OriginFiler.Views
         /// <param name="folderPath"></param>
         private void OpenFolder(string folderPath)
         {
-            ObjectListView.Items.Clear();
+            ObservableCollection<ListViewData> listViewDatas = [];
                         
             try 
             {
@@ -62,13 +65,33 @@ namespace OriginFiler.Views
                             }
                         }
                     };
-                    ObjectListView.Items.Add(view);
+                    listViewDatas.Add(new ListViewData(view));
                 };
+                ObjectListView.ItemsSource = listViewDatas;
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        /// <summary>
+        /// ListViewヘッダークリックイベント ソートキーでソートする
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GridViewColumnHeader_Click(object sender, RoutedEventArgs e)
+        {
+            GridViewColumnHeader gridViewColumnHeader = (GridViewColumnHeader)sender;
+            string? sortBy = gridViewColumnHeader.Tag.ToString();
+
+            ICollectionView view = CollectionViewSource.GetDefaultView(ObjectListView.ItemsSource);
+            ListSortDirection direction = view.SortDescriptions.FirstOrDefault().Direction == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
+            SortDescription currentSort = new(sortBy, direction);
+
+            view.SortDescriptions.Clear();
+            view.SortDescriptions.Add(currentSort);
+            view.Refresh();
         }
     }
 }
