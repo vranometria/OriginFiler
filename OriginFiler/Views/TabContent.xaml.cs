@@ -26,7 +26,6 @@ namespace OriginFiler.Views
         public TabContent(string folderPath)
         {
             InitializeComponent();
-            OpenFolder(folderPath);
             ChangeFolder(folderPath);
         }
 
