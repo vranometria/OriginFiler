@@ -2,10 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Diagnostics;
 using System.Text.Json;
 using System.IO;
 using System.Windows.Controls;
+using System.Windows;
 
 namespace OriginFiler
 {
@@ -52,6 +53,16 @@ namespace OriginFiler
                 SetHierarchies(rootItem, model);
             }
             return hierarchyInfos;
+        }
+
+        public static MenuItem CreateOpenExploreMenuItem(string folderPath)
+        {
+            MenuItem openExploreItem = new() { Header = "Open Explorer" };
+            openExploreItem.Click += delegate (object sender, RoutedEventArgs e)
+            {
+                if (!string.IsNullOrEmpty(folderPath)) { Process.Start("EXPLORER.EXE", folderPath); }
+            };
+            return openExploreItem;
         }
     }
 }

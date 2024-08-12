@@ -109,6 +109,8 @@ namespace OriginFiler
             ContextMenu contextMenu = new();
             contextMenu.Items.Add(addItem);
             contextMenu.Items.Add(openItem);
+            contextMenu.Items.Add(Util.CreateOpenExploreMenuItem(hierarchyInfo.FolderPath));
+            contextMenu.Items.Add(new Separator());
             contextMenu.Items.Add(deleteItem);
             item.ContextMenu = contextMenu;
 
