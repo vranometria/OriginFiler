@@ -57,14 +57,17 @@ namespace OriginFiler
             return JsonSerializer.Deserialize<AppData?>(json);
         }
 
-        public static void SetHierarchies(TreeViewItem parentItem, HierarchyInfo parentHierarchyInfo)
+        public static List<HierarchyInfo> BuildHierarchies(TreeViewItem parentItem)
         {   
+            List<HierarchyInfo> hierarchyInfos = [];
+
             foreach (TreeViewItem childItem in parentItem.Items)
             {
                 HierarchyInfo childInfo = (HierarchyInfo)childItem.Tag;
-                parentHierarchyInfo.Hierarchies.Add(childInfo);
-                SetHierarchies(childItem, childInfo);
+                childInfo.Hierarchies = BuildHierarchies(childItem);
+                hierarchyInfos.Add(childInfo);
             }
+            return hierarchyInfos;
         }
 
         public static List<HierarchyInfo> CreateHierarchyInfos(TreeView treeView)
@@ -78,8 +81,8 @@ namespace OriginFiler
                     Name = rootInfo.Name,
                     FolderPath = rootInfo.FolderPath,
                 };
+                model.Hierarchies = BuildHierarchies(rootItem);
                 hierarchyInfos.Add(model);
-                SetHierarchies(rootItem, model);
             }
             return hierarchyInfos;
         }
