@@ -25,6 +25,8 @@ namespace OriginFiler.Views
     {
         private string FolderPath { get; set; }
 
+        private ObservableCollection<ListViewData> ListViewDatas { get; set; } = new();
+
         public TabContent(string folderPath)
         {
             InitializeComponent();
@@ -69,7 +71,8 @@ namespace OriginFiler.Views
                     };
                     listViewDatas.Add(new ListViewData(view));
                 };
-                ObjectListView.ItemsSource = listViewDatas;
+                ListViewDatas = listViewDatas;
+                ObjectListView.ItemsSource = ListViewDatas;
             }
             catch(Exception ex)
             {
@@ -117,6 +120,20 @@ namespace OriginFiler.Views
         private void OpenExploreMenuitem_Click(object sender, RoutedEventArgs e)
         {
             Util.OpenExplorer(FolderPath);
+        }
+
+        private void NameFilterTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ObjectListView.ItemsSource = ListViewDatas.Where(data => data.ObjectName.Contains(NameFilterTextBox.Text));
+        }
+
+        private void NameFilterTextBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                NameFilterTextBox.Text = "";
+                e.Handled = true;
+            }
         }
     }
 }

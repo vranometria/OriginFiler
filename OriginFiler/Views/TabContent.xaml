@@ -31,7 +31,7 @@
         </ListView>
         <Grid Height="58" VerticalAlignment="Top">
             <TextBox x:Name="FolderPathTextBox" Height="19" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
-            <TextBox x:Name="NameFilterTextBox" TextWrapping="Wrap" Text="" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="288"/>
+            <TextBox x:Name="NameFilterTextBox" TextWrapping="Wrap" Text="" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="288" TextChanged="NameFilterTextBox_TextChanged" KeyDown="NameFilterTextBox_KeyDown"/>
             <Grid HorizontalAlignment="Left" Height="29" Margin="205,29,0,0" VerticalAlignment="Top" Width="138">
                 <Button x:Name="UpperDirectoryButton" HorizontalAlignment="Left" Width="25" Height="25" Click="UpperDirectoryButton_Click">
                     <Button.Background>

@@ -12,6 +12,7 @@
   <ItemGroup>
     <None Remove="Images\Icons\excel.png" />
     <None Remove="Images\Icons\folder.png" />
+    <None Remove="Images\Icons\image.png" />
     <None Remove="Images\Icons\object.png" />
     <None Remove="Images\Icons\powerpoint.png" />
     <None Remove="Images\Icons\text.png" />
@@ -34,12 +35,27 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\Icons\excel.png" />
-    <Resource Include="Images\Icons\folder.png" />
-    <Resource Include="Images\Icons\object.png" />
-    <Resource Include="Images\Icons\powerpoint.png" />
-    <Resource Include="Images\Icons\text.png" />
-    <Resource Include="Images\Icons\word.png" />
+    <Resource Include="Images\Icons\excel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Icons\folder.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Icons\image.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Icons\object.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Icons\powerpoint.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Icons\text.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Icons\word.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\reload.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
