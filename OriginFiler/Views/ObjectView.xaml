@@ -5,6 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:OriginFiler.Views"
              mc:Ignorable="d" Height="40" Width="441">
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem x:Name="CopyMenuItem" Header="コピー" Click="CopyMenuItem_Click"/>
+        </ContextMenu>
+    </UserControl.ContextMenu>
     <Grid>
         <Label x:Name="ObjectNameLabel" Content="ファイル名" Height="27" VerticalAlignment="Top"/>
 

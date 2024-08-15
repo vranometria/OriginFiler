@@ -12,7 +12,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
+using System.Collections.Specialized;
 
 namespace OriginFiler.Views
 {
@@ -36,6 +36,16 @@ namespace OriginFiler.Views
         {
             ObjectInfo = new ObjectInfo(objectPath);
             ObjectNameLabel.Content = ObjectName;
+        }
+
+        /// <summary>
+        /// コピーメニュークリックイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CopyMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetFileDropList([ObjectPath]);
         }
     }
 }
