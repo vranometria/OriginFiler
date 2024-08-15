@@ -91,5 +91,15 @@ namespace OriginFiler.Views
         {
             Clipboard.SetFileDropList([ObjectPath]);
         }
+
+        /// <summary>
+        /// フルパスコピーメニュークリックイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CopyFullPathMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetText(ObjectPath);
+        }
     }
 }

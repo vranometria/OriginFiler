@@ -7,7 +7,8 @@
              mc:Ignorable="d" Height="40" Width="441">
     <UserControl.ContextMenu>
         <ContextMenu>
-            <MenuItem x:Name="CopyMenuItem" Header="コピー" Click="CopyMenuItem_Click"/>
+            <MenuItem x:Name="CopyMenuItem" Header="Copy Object" Click="CopyMenuItem_Click"/>
+            <MenuItem x:Name="CopyFullPathMenuItem" Header="Copy Full Path" Click="CopyFullPathMenuItem_Click"/>
         </ContextMenu>
     </UserControl.ContextMenu>
     <Grid>
