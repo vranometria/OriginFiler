@@ -31,6 +31,8 @@ namespace OriginFiler
         /// <summary>ホットキーイベント</summary>
         private EventHandler? HotkeyEvent;
 
+        private bool IsFirstOpen = true;
+
         [DllImport("user32.dll")]
         public static extern bool GetCursorPos(out POINT lpPoint);
 
@@ -63,10 +65,12 @@ namespace OriginFiler
             //ダブルクリックでフォルダを開く
             item.MouseDoubleClick += delegate(object sender, MouseButtonEventArgs e)
             {
+                if (!IsFirstOpen) { return; }
                 HierarchyInfo info = (HierarchyInfo)item.Tag;
                 if (!string.IsNullOrEmpty(info.FolderPath))
                 {
                     OpenTab(info);
+                    IsFirstOpen = false;
                 }
             };
 
@@ -291,6 +295,11 @@ namespace OriginFiler
             {
                 Hide();
             }
+        }
+
+        private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            IsFirstOpen = true;
         }
     }
 }
