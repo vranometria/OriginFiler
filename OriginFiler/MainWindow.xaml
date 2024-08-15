@@ -7,14 +7,14 @@
         AllowsTransparency="True"
         xmlns:local="clr-namespace:OriginFiler"
         mc:Ignorable="d"
-        Title="Origin Filer" Height="450" Width="800" Loaded="Window_Loaded" Background="#424242" MouseDown="Window_MouseDown" Closed="Window_Closed" KeyDown="Window_KeyDown">
+        Title="Origin Filer" Height="588" Width="983" Loaded="Window_Loaded" Background="#424242" MouseDown="Window_MouseDown" Closed="Window_Closed" KeyDown="Window_KeyDown">
     <Window.Resources>
         <SolidColorBrush x:Key="BackGroundColor" Color="#424242"></SolidColorBrush>
     </Window.Resources>
 
     <Grid>
         <Grid Height="21" VerticalAlignment="Top" x:Name="TitleBarGrid">
-            <Button x:Name="CloseButton" Content="✖" Height="21" VerticalAlignment="Center" Background="{StaticResource BackGroundColor}" Foreground="White" HorizontalAlignment="Left" Width="24" Margin="776,0,0,0" Click="CloseButton_Click"/>
+            <Button x:Name="CloseButton" Content="✖" Height="21" VerticalAlignment="Center" Background="{StaticResource BackGroundColor}" Foreground="White" Click="CloseButton_Click" HorizontalAlignment="Right" Width="24"/>
             <Label Content="Origin Filer" HorizontalAlignment="Left" Height="28" VerticalAlignment="Center" Width="141" Margin="3,0,0,0" Foreground="White"/>
         </Grid>
         <Menu Height="21" Margin="0,26,0,0" VerticalAlignment="Top" Background="{StaticResource BackGroundColor}">
