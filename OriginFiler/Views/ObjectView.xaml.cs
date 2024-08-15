@@ -36,6 +36,50 @@ namespace OriginFiler.Views
         {
             ObjectInfo = new ObjectInfo(objectPath);
             ObjectNameLabel.Content = ObjectName;
+            FileIconImage.Source = GetIconSource(objectPath);
+        }
+
+        private ImageSource GetIconSource(string objectPath) 
+        {
+            string extension = Path.GetExtension(objectPath).ToLower();
+            string iconFileName = "object.png";
+            switch (extension)
+            {
+                case ".xls":
+                case ".xlsx":
+                    iconFileName = "excel.png";
+                    break;
+
+                case ".doc":
+                case ".docx":
+                    iconFileName = "word.png";
+                    break;
+
+                case ".ppt":
+                case ".pptx":
+                    iconFileName = "powerpoint.png";
+                    break;
+
+                case ".txt":
+                case ".json":
+                case ".xml":
+                case ".csv":
+                    iconFileName = "text.png";
+                    break;
+
+                case ".jpg":
+                case ".jpeg":
+                case ".png":
+                case ".gif":
+                case ".bmp":
+                    iconFileName = "image.png";
+                    break;
+            }
+
+            if (Directory.Exists(objectPath)) { iconFileName = "folder.png"; }
+
+            string uri = $"pack://application:,,,/Images/Icons/{iconFileName}";
+            return new BitmapImage(new Uri(uri));
         }
 
         /// <summary>

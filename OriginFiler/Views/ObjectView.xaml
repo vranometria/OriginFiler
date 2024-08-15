@@ -11,7 +11,7 @@
         </ContextMenu>
     </UserControl.ContextMenu>
     <Grid>
-        <Label x:Name="ObjectNameLabel" Content="ファイル名" Height="27" VerticalAlignment="Top"/>
-
+        <Image x:Name="FileIconImage" HorizontalAlignment="Left" Height="30" Margin="10,4,0,0" VerticalAlignment="Top" Width="30"/>
+        <Label x:Name="ObjectNameLabel" Content="ファイル名" Height="27" VerticalAlignment="Top" Margin="63,0,0,0"/>
     </Grid>
 </UserControl>
