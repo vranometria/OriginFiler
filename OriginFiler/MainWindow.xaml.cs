@@ -201,7 +201,7 @@ namespace OriginFiler
             HotkeyEvent = (sender, e) =>
             {
                 Hide();
-                DispatcherTimer timer = new() { Interval = TimeSpan.FromMilliseconds(1) };
+                DispatcherTimer timer = new() { Interval = TimeSpan.FromMilliseconds(50) };
                 timer.Tick += (sender, e) =>
                 {
                     timer.Stop();
