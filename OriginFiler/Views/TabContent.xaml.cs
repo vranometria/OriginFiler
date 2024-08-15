@@ -47,8 +47,8 @@ namespace OriginFiler.Views
         private void OpenFolder(string folderPath)
         {
             ObservableCollection<ListViewData> listViewDatas = [];
-                        
-            try 
+
+            try
             {
                 string[] files = Directory.GetFiles(folderPath);
                 string[] directories = Directory.GetDirectories(folderPath);
@@ -74,9 +74,18 @@ namespace OriginFiler.Views
                 ListViewDatas = listViewDatas;
                 ObjectListView.ItemsSource = ListViewDatas;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void Reload()    
+        {
+            DirectoryInfo? currentDir = new(FolderPath);
+            if (currentDir.Exists)
+            {
+                ChangeFolder(currentDir.FullName);
             }
         }
 
@@ -110,11 +119,7 @@ namespace OriginFiler.Views
 
         private void ReloadButton_Click(object sender, RoutedEventArgs e)
         {
-            DirectoryInfo? currentDir = new DirectoryInfo(FolderPathTextBox.Text);
-            if (currentDir.Exists)
-            {
-                ChangeFolder(currentDir.FullName);
-            }
+            Reload();
         }
 
         private void OpenExploreMenuitem_Click(object sender, RoutedEventArgs e)
@@ -133,6 +138,33 @@ namespace OriginFiler.Views
             {
                 NameFilterTextBox.Text = "";
                 e.Handled = true;
+            }
+        }
+
+        private void UserControl_Drop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+            try 
+            {
+                files.ToList().ForEach(file =>
+                {
+                    string fileName = Path.GetFileName(file);
+                    string destPath = Path.Combine(FolderPath, fileName);
+                    if (File.Exists(file))
+                    { 
+                        File.Move(file, destPath);
+                    }
+                    else if (Directory.Exists(file))
+                    {
+                        Directory.Move(file, destPath);
+                    }
+                });
+                Reload();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }
