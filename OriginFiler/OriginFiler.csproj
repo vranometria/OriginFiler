@@ -7,6 +7,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
+    <ApplicationIcon>mech.ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +20,10 @@
     <None Remove="Images\Icons\word.png" />
     <None Remove="Images\reload.png" />
     <None Remove="Images\upper.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="mech.ico" />
   </ItemGroup>
 
   <ItemGroup>
