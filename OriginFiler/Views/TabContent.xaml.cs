@@ -25,11 +25,14 @@ namespace OriginFiler.Views
     {
         private string FolderPath { get; set; }
 
+        private string HomeFolderPath { get; set; }
+
         private ObservableCollection<ListViewData> ListViewDatas { get; set; } = new();
 
         public TabContent(string folderPath)
         {
             InitializeComponent();
+            HomeFolderPath = folderPath;
             FolderPath = folderPath;
             ChangeFolder(folderPath);
         }
@@ -166,6 +169,11 @@ namespace OriginFiler.Views
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeFolder(HomeFolderPath);
         }
     }
 }

@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\home.png" />
     <None Remove="Images\Icons\excel.png" />
     <None Remove="Images\Icons\folder.png" />
     <None Remove="Images\Icons\image.png" />
@@ -24,6 +25,10 @@
 
   <ItemGroup>
     <Content Include="mech.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\home.png" />
   </ItemGroup>
 
   <ItemGroup>
