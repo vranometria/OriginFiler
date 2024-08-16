@@ -24,6 +24,7 @@ namespace OriginFiler
                 {
                     FileName = filePath,
                     UseShellExecute = true,
+                    WorkingDirectory = Path.GetDirectoryName(filePath),
                 };
                 Process.Start(processStartInfo);
             }catch(Exception e)
