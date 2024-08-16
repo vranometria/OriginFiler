@@ -20,6 +20,7 @@
         <Menu Height="21" Margin="0,26,0,0" VerticalAlignment="Top" Background="{StaticResource BackGroundColor}">
             <MenuItem Header="Menu" Foreground="White" Background="{StaticResource BackGroundColor}">
                 <MenuItem x:Name="HotkeyMenuItem" Header="Hotkey" Click="HotkeyMenu_Click" Background="{StaticResource BackGroundColor}" Foreground="White"></MenuItem>
+                <MenuItem x:Name="AddFavariteFileMenuItem" Header="Add Favarite File" Background="{StaticResource BackGroundColor}" Foreground="White" Click="AddFavariteFileMenuItem_Click"></MenuItem>
             </MenuItem>
             <MenuItem x:Name="FavariteMenu" Header="Favaite" Background="{StaticResource BackGroundColor}" Foreground="White"></MenuItem>
         </Menu>

@@ -12,6 +12,7 @@ using System.Windows.Forms.Integration;
 using System.Runtime.InteropServices;
 using System.Timers;
 using System.Windows.Threading;
+using Microsoft.Win32;
 
 namespace OriginFiler
 {
@@ -202,6 +203,14 @@ namespace OriginFiler
                 {
                     Util.Open(favarite.Path);
                 };
+                menuItem.ContextMenu = new ContextMenu();
+                MenuItem deleteMenuItem = new() { Header = "Delete" };
+                deleteMenuItem.Click += delegate (object sender, RoutedEventArgs e)
+                {
+                    AppDataManager.Favarites.Remove(favarite);
+                    ListFavariteMenus();
+                };
+                menuItem.ContextMenu.Items.Add(deleteMenuItem);
                 FavariteMenu.Items.Add(menuItem);
             });
         }
@@ -317,6 +326,21 @@ namespace OriginFiler
         private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             IsFirstOpen = true;
+        }
+
+        /// <summary>
+        /// お気に入りファイル追加メニューイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddFavariteFileMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new(){Filter = "All Files|*.*"};
+            if(openFileDialog.ShowDialog() == true)
+            {
+                string path = openFileDialog.FileName;
+                Util.AddFavarite(path);
+            }
         }
     }
 }

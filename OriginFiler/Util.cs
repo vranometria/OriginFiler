@@ -133,5 +133,11 @@ namespace OriginFiler
             contextMenu.Items.Add(closeItem);
             return contextMenu;
         }
+
+        public static void AddFavarite(string path)
+        {
+            AppDataManager appDataManager = AppDataManager.Instance;
+            appDataManager.AddFavarite(new Favarite() { Label = Path.GetFileName(path), Path = path });
+        }
     }
 }

@@ -118,7 +118,7 @@ namespace OriginFiler.Views
         {
             string? name = Path.GetFileName(ObjectPath);
             if (name == null || ObjectPath == null) { return; }
-            AppDataManager.AddFavarite(new Favarite(){ Label = name, Path = ObjectPath });
+            Util.AddFavarite(ObjectPath);
             LightFavarite();
         }
     }
