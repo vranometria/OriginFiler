@@ -23,9 +23,12 @@ namespace OriginFiler.Views
     {
         public ObjectInfo? ObjectInfo { get; private set; }
 
+        private AppDataManager AppDataManager = AppDataManager.Instance;
+
         public string? ObjectPath => ObjectInfo?.ObjectPath;
 
         public string ObjectName => $"{ObjectInfo?.ObjectName}";
+
 
         public ObjectView()
         {
@@ -37,6 +40,7 @@ namespace OriginFiler.Views
             ObjectInfo = new ObjectInfo(objectPath);
             ObjectNameLabel.Content = ObjectName;
             FileIconImage.Source = GetIconSource(objectPath);
+            if(AppDataManager.IsRegisteredFavarite(objectPath)) { LightFavarite(); }
         }
 
         private ImageSource GetIconSource(string objectPath) 
@@ -83,6 +87,14 @@ namespace OriginFiler.Views
         }
 
         /// <summary>
+        /// お気に入りボタンの背景画像をyellow-star.pngに変更する
+        /// </summary>
+        private void LightFavarite() 
+        {
+            FavariteButton.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/yellow-star.png")));
+        }
+
+        /// <summary>
         /// コピーメニュークリックイベント
         /// </summary>
         /// <param name="sender"></param>
@@ -100,6 +112,14 @@ namespace OriginFiler.Views
         private void CopyFullPathMenuItem_Click(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(ObjectPath);
+        }
+
+        private void FavariteButton_Click(object sender, RoutedEventArgs e)
+        {
+            string? name = Path.GetFileName(ObjectPath);
+            if (name == null || ObjectPath == null) { return; }
+            AppDataManager.AddFavarite(new Favarite(){ Label = name, Path = ObjectPath });
+            LightFavarite();
         }
     }
 }

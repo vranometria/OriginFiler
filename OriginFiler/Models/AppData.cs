@@ -8,8 +8,10 @@ namespace OriginFiler.Models
 {
     public class AppData
     {
-        public List<HierarchyInfo> Hierarchies { get; set; } = new List<HierarchyInfo>();
+        public List<HierarchyInfo> Hierarchies { get; set; } = [];
 
         public Hotkey Hotkey { get; set; } = new Hotkey();
+
+        public List<Favarite> Favarites { get; set; } = [];
     }
 }

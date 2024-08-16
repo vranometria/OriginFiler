@@ -21,6 +21,7 @@
             <MenuItem Header="Menu" Foreground="White" Background="{StaticResource BackGroundColor}">
                 <MenuItem x:Name="HotkeyMenuItem" Header="Hotkey" Click="HotkeyMenu_Click" Background="{StaticResource BackGroundColor}" Foreground="White"></MenuItem>
             </MenuItem>
+            <MenuItem x:Name="FavariteMenu" Header="Favaite" Background="{StaticResource BackGroundColor}" Foreground="White"></MenuItem>
         </Menu>
 
         <TreeView x:Name="FolderTreeView" ItemsSource="{Binding Items}" Margin="0,52,571,0" Background="{StaticResource BackGroundColor}">

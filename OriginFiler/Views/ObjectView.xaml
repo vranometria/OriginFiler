@@ -13,6 +13,11 @@
     </UserControl.ContextMenu>
     <Grid>
         <Image x:Name="FileIconImage" HorizontalAlignment="Left" Height="30" Margin="10,4,0,0" VerticalAlignment="Top" Width="30"/>
-        <Label x:Name="ObjectNameLabel" Content="ファイル名" Height="27" VerticalAlignment="Top" Margin="63,0,0,0"/>
+        <Label x:Name="ObjectNameLabel" Content="ファイル名" Height="27" VerticalAlignment="Top" Margin="63,0,39,0"/>
+        <Button x:Name="FavariteButton" Content="" HorizontalAlignment="Right" Height="24" Margin="0,0,9,0" VerticalAlignment="Center" Width="25" Click="FavariteButton_Click" BorderThickness="0">
+            <Button.Background>
+                <ImageBrush ImageSource="pack://application:,,,/Images/white-star.png"/>
+            </Button.Background>
+        </Button>
     </Grid>
 </UserControl>

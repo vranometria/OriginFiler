@@ -7,11 +7,24 @@ using System.Text.Json;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows;
+using System.Text.Json.Serialization;
 
 namespace OriginFiler
 {
     public static class Util
     {
+        public static void Open(string path)
+        {
+            if (Directory.Exists(path))
+            {
+                OpenExplorer(path);
+            }
+            else if (File.Exists(path))
+            {
+                OpenFile(path);
+            }
+        }
+
         /// <summary>
         /// ファイルを実行する
         /// </summary>
@@ -54,8 +67,9 @@ namespace OriginFiler
         {
             //ファイルから読み込む
             string json = File.ReadAllText(inputFilePath);
+            JsonSerializerOptions options = new() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault };
             //jsonをオブジェクトに変換する
-            return JsonSerializer.Deserialize<AppData?>(json);
+            return JsonSerializer.Deserialize<AppData?>(json, options);
         }
 
         public static List<HierarchyInfo> BuildHierarchies(TreeViewItem parentItem)

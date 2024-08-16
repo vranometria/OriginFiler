@@ -21,6 +21,8 @@
     <None Remove="Images\Icons\word.png" />
     <None Remove="Images\reload.png" />
     <None Remove="Images\upper.png" />
+    <None Remove="Images\white-star.png" />
+    <None Remove="Images\yellow-star.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,6 +74,8 @@
     <Resource Include="Images\upper.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Images\white-star.png" />
+    <Resource Include="Images\yellow-star.png" />
   </ItemGroup>
 
 </Project>

@@ -20,10 +20,7 @@ namespace OriginFiler
     /// </summary>
     public partial class MainWindow : Window
     {
-        private const string APP_DATA_FILE = "app.json";
-
-        /// <summary>アプリの設定データ</summary>
-        private AppData AppData { get; set; } = new AppData();
+        private AppDataManager AppDataManager = AppDataManager.Instance;
 
         /// <summary>ホットキーの操作クラス</summary>
         private HotkeyHelper? HotkeyHelper;
@@ -142,8 +139,7 @@ namespace OriginFiler
         /// </summary>
         private void Save() 
         {
-            AppData.Hierarchies = Util.CreateHierarchyInfos(FolderTreeView);
-            Util.WriteFile(APP_DATA_FILE, AppData);
+            AppDataManager.Save(Util.CreateHierarchyInfos(FolderTreeView));
         }
         
         /// <summary>
@@ -151,16 +147,13 @@ namespace OriginFiler
         /// </summary>
         private void LoadData() 
         {
-            AppData? appData = Util.ReadFile(APP_DATA_FILE);
-            if (appData != null)
-            {
-                AppData = appData;
-                AppData.Hierarchies.ForEach( rootInfo => {
-                    TreeViewItem rootItem = CreateTreeItem(rootInfo);
-                    FolderTreeView.Items.Add(rootItem);
-                    BuildTreeView(rootInfo.Hierarchies, rootItem);
-                });
-            }   
+            AppDataManager.Hierarchies.ForEach( rootInfo => {
+                TreeViewItem rootItem = CreateTreeItem(rootInfo);
+                FolderTreeView.Items.Add(rootItem);
+                BuildTreeView(rootInfo.Hierarchies, rootItem);
+            });
+
+            ListFavariteMenus();
         }
 
         /// <summary>
@@ -179,6 +172,9 @@ namespace OriginFiler
             }
         }
 
+        /// <summary>
+        /// マウスポインタの位置に移動する
+        /// </summary>
         private void MoveToMousePointerPosition()
         {
             if (GetCursorPos(out POINT point))
@@ -186,6 +182,28 @@ namespace OriginFiler
                 Left = point.X;
                 Top = point.Y;
             }
+        }
+
+        /// <summary>
+        /// お気に入りメニューを表示する
+        /// </summary>
+        private void ListFavariteMenus() 
+        {
+            FavariteMenu.Items.Clear();
+            AppDataManager.Favarites.ForEach(favarite =>
+            {
+                MenuItem menuItem = new()
+                {
+                    Header = favarite.Label,
+                    Background = (SolidColorBrush) Resources["BackGroundColor"],
+                    Foreground = Brushes.White
+                };
+                menuItem.Click += delegate (object sender, RoutedEventArgs e)
+                {
+                    Util.Open(favarite.Path);
+                };
+                FavariteMenu.Items.Add(menuItem);
+            });
         }
 
         /// <summary>
@@ -197,10 +215,9 @@ namespace OriginFiler
         /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            if(File.Exists(APP_DATA_FILE))
-            {                 
-                LoadData();
-            }
+            LoadData();
+
+            AppDataManager.FavariteAdded += (sender, e) => { ListFavariteMenus(); };
 
             HotkeyEvent = (sender, e) =>
             {
@@ -216,7 +233,7 @@ namespace OriginFiler
                 timer.Start();
             };
             HotkeyHelper = new HotkeyHelper(this, HotkeyEvent);
-            if (AppData.Hotkey.IsValid) { HotkeyHelper.Register(AppData.Hotkey.GetModifireKeys(), AppData.Hotkey.Key); }
+            if (AppDataManager.Hotkey.IsValid) { HotkeyHelper.Register(AppDataManager.Hotkey.GetModifireKeys(), AppDataManager.Hotkey.Key); }
         }
 
         /// <summary>
@@ -275,11 +292,11 @@ namespace OriginFiler
         /// <param name="e"></param>
         private void HotkeyMenu_Click(object sender, RoutedEventArgs e)
         {
-            HotkeyWindow hotkeyWindow = new HotkeyWindow(AppData.Hotkey, HotkeyHelper);
+            HotkeyWindow hotkeyWindow = new HotkeyWindow(AppDataManager.Hotkey, HotkeyHelper);
             hotkeyWindow.ShowDialog();
             if(hotkeyWindow.IsApply)
             {
-                AppData.Hotkey = hotkeyWindow.Hotkey;
+                AppDataManager.Hotkey = hotkeyWindow.Hotkey;
             }
         }
 
@@ -291,7 +308,7 @@ namespace OriginFiler
         /// <param name="e"></param>
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape && AppData.Hotkey.IsValid )
+            if (e.Key == Key.Escape && AppDataManager.Hotkey.IsValid )
             {
                 Hide();
             }
