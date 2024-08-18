@@ -43,7 +43,7 @@ namespace OriginFiler.Views
             if(AppDataManager.IsRegisteredFavarite(objectPath)) { LightFavarite(); }
         }
 
-        private ImageSource GetIconSource(string objectPath) 
+        private static BitmapImage GetIconSource(string objectPath) 
         {
             string extension = Path.GetExtension(objectPath).ToLower();
             string iconFileName = "object.png";
@@ -77,6 +77,14 @@ namespace OriginFiler.Views
                 case ".gif":
                 case ".bmp":
                     iconFileName = "image.png";
+                    break;
+
+                case ".exe":
+                    iconFileName = "exe.png";
+                    break;
+
+                case ".bat":
+                    iconFileName = "bat.png";
                     break;
             }
 

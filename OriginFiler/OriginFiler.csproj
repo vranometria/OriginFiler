@@ -12,7 +12,9 @@
 
   <ItemGroup>
     <None Remove="Images\home.png" />
+    <None Remove="Images\Icons\bat.png" />
     <None Remove="Images\Icons\excel.png" />
+    <None Remove="Images\Icons\exe.png" />
     <None Remove="Images\Icons\folder.png" />
     <None Remove="Images\Icons\image.png" />
     <None Remove="Images\Icons\object.png" />
@@ -47,7 +49,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Icons\bat.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Images\Icons\excel.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\Icons\exe.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Images\Icons\folder.png">
