@@ -15,6 +15,7 @@ using System.IO;
 using OriginFiler.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.DirectoryServices.ActiveDirectory;
 
 namespace OriginFiler.Views
 {
@@ -23,7 +24,7 @@ namespace OriginFiler.Views
     /// </summary>
     public partial class TabContent : UserControl
     {
-        private string FolderPath { get; set; }
+        private string FolderPath => DirectoryBreadcrumb.DirectoryPath;
 
         private string HomeFolderPath { get; set; }
 
@@ -33,7 +34,6 @@ namespace OriginFiler.Views
         {
             InitializeComponent();
             HomeFolderPath = folderPath;
-            FolderPath = folderPath;
             ChangeFolder(folderPath);
         }
 

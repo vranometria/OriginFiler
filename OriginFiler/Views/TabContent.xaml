@@ -23,7 +23,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn DisplayMemberBinding="{Binding ObjectType}" Width="auto">
+                    <GridViewColumn DisplayMemberBinding="{Binding ObjectType}" Width="80">
                         <GridViewColumnHeader Content="種類" Tag="ObjectType" Click="GridViewColumnHeader_Click"/>
                     </GridViewColumn>
                 </GridView>
