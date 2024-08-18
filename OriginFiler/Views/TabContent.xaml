@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:OriginFiler.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Drop="UserControl_Drop" AllowDrop="True">
+             d:DesignHeight="450" d:DesignWidth="800" Drop="UserControl_Drop" AllowDrop="True" Loaded="UserControl_Loaded">
     <Grid>
         <ListView x:Name="ObjectListView" Margin="10,63,10,10" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListView.ContextMenu>
@@ -30,7 +30,6 @@
             </ListView.View>
         </ListView>
         <Grid Height="58" VerticalAlignment="Top">
-            <TextBox x:Name="FolderPathTextBox" Height="19" TextWrapping="Wrap" Text="" VerticalAlignment="Top"/>
             <TextBox x:Name="NameFilterTextBox" TextWrapping="Wrap" Text="" Height="19" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="209" TextChanged="NameFilterTextBox_TextChanged" KeyDown="NameFilterTextBox_KeyDown"/>
             <Grid HorizontalAlignment="Left" Height="29" Margin="205,29,0,0" VerticalAlignment="Top" Width="138">
                 <Button x:Name="UpperDirectoryButton" HorizontalAlignment="Left" Width="25" Height="25" Click="UpperDirectoryButton_Click">
@@ -52,6 +51,16 @@
                     </Button.Background>
                 </Button>
             </Grid>
+            <local:Breadcrumb x:Name="DirectoryBreadcrumb" Margin="0,-2,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Height="29">
+                <local:Breadcrumb.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleX="-1.011"/>
+                        <RotateTransform/>
+                        <TranslateTransform X="-0.273"/>
+                    </TransformGroup>
+                </local:Breadcrumb.RenderTransform>
+            </local:Breadcrumb>
         </Grid>
 
     </Grid>

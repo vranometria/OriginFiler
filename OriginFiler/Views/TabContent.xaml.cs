@@ -39,7 +39,12 @@ namespace OriginFiler.Views
 
         private void ChangeFolder(string folderPath)
         {
-            FolderPathTextBox.Text = folderPath;
+            DirectoryBreadcrumb.ChangeDirectory(folderPath);
+            OpenFolder(folderPath);
+        }
+
+        private void ChangeFolderByBreadcrumb(string folderPath)
+        {
             OpenFolder(folderPath);
         }
 
@@ -92,6 +97,11 @@ namespace OriginFiler.Views
             }
         }
 
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            DirectoryBreadcrumb.PathChanged += (s, p) => ChangeFolderByBreadcrumb(p);
+        }
+
         /// <summary>
         /// ListViewヘッダークリックイベント ソートキーでソートする
         /// </summary>
@@ -111,9 +121,17 @@ namespace OriginFiler.Views
             view.Refresh();
         }
 
+        /// <summary>
+        /// 上階層に移動するイベント
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpperDirectoryButton_Click(object sender, RoutedEventArgs e)
         {
-            DirectoryInfo? parentDir = Directory.GetParent(FolderPathTextBox.Text);
+            string? current = DirectoryBreadcrumb.DirectoryPath;
+            if(current == null) { return; }
+
+            DirectoryInfo? parentDir = Directory.GetParent(current);
             if (parentDir != null)
             {
                 ChangeFolder(parentDir.FullName);

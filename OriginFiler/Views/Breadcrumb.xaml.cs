@@ -20,10 +20,7 @@ namespace OriginFiler.Views
     /// </summary>
     public partial class Breadcrumb : UserControl
     {
-        /// <summary>
-        /// 現在のパス
-        /// </summary>
-        public string? DirectoryPath { get; private set; }
+        public string DirectoryPath {get; private set; } = "";
 
         /// <summary>
         /// パス変更イベント
@@ -35,39 +32,83 @@ namespace OriginFiler.Views
         public Breadcrumb(string path): this()
         {
             DirectoryPath = path;
+            DirectoryPathTextBox.Text = path;
         }
 
+        public void ChangeDirectory(string path)
+        {
+            DirectoryPath = path;
+            Show();
+        }
+
+        private void ChangeButtonMode()
+        {
+            DrawArea.Visibility = Visibility.Visible;
+            DirectoryPathTextBox.Visibility = Visibility.Hidden;
+        }
+
+        private void ChangeTextMode() 
+        {
+            DrawArea.Visibility = Visibility.Hidden;
+            DirectoryPathTextBox.Visibility = Visibility.Visible;
+            DirectoryPathTextBox.Focus();
+        }
+
+        /// <summary>
+        /// 現在パスにおける表示を更新する
+        /// </summary>
         private void Show() 
         {
             if (string.IsNullOrEmpty(DirectoryPath)) { return; }
 
             DrawArea.Children.Clear();
 
-            List<Button> buttons = [];
-            string? p = DirectoryPath;
+            DirectoryPathTextBox.Text = DirectoryPath;
 
+            string? p = DirectoryPath;
+            List<Button> buttons = [];
             while (!string.IsNullOrEmpty(p))
             {
-                Button buttton = new()
+                string name = Path.GetFileName(p);
+                if (string.IsNullOrEmpty(name)) 
+                { 
+                    DirectoryInfo directoryInfo = new(p);
+                    name = directoryInfo.Root.Name;
+                }
+
+                Button button = new()
                 {
-                    Content = Path.GetDirectoryName(p),
+                    Content = $" {name} ",
                     Tag = p,
-                    Background = Brushes.Transparent,
+                    Background = Brushes.White,
+                    Width = double.NaN,
+                    Height = double.NaN,
+                    BorderThickness = new Thickness(0),
                 };
-                buttton.Click += (s, e) => {
-                    PathChanged?.Invoke(this, p);
+                button.Click += (s, e) => {
+                    string path = (s as Button)?.Tag as string ?? "";
+                    DirectoryPath = path;
+                    Show();
+                    PathChanged?.Invoke(this, path);
                 };
 
-                buttons.Add(p);
+                buttons.Add(button);
 
-                // pの親ディレクトリを取得
                 p = Path.GetDirectoryName(p);
             }
 
             buttons.Reverse();
-            buttons.ForEach(button => { 
+            buttons.ForEach(button => {
+                Label label = new Label
+                {
+                    Content = "▶",
+                    Background = Brushes.White,
+                    BorderThickness = new Thickness(0),
+                    BorderBrush = Brushes.White,
+                    Height = double.NaN,
+                };
                 DrawArea.Children.Add(button);
-                DrawArea.Children.Add(new Label { Content = "▶" });
+                DrawArea.Children.Add(label);
             });
         }
 
@@ -78,14 +119,7 @@ namespace OriginFiler.Views
 
         private void DrawArea_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            DrawArea.Visibility = Visibility.Hidden;
-            DirectoryPathTextBox.Visibility = Visibility.Visible;
-        }
-
-        private void DirectoryPathTextBox_LostFocus(object sender, RoutedEventArgs e)
-        {
-            DrawArea.Visibility = Visibility.Visible;
-            DirectoryPathTextBox.Visibility = Visibility.Hidden;
+            ChangeTextMode();
         }
 
         private void DirectoryPathTextBox_KeyDown(object sender, KeyEventArgs e)
@@ -95,9 +129,17 @@ namespace OriginFiler.Views
                 string path = DirectoryPathTextBox.Text;
                 if (Directory.Exists(path) && PathChanged != null )
                 {
+                    DirectoryPath = path;
+                    Show();
+                    ChangeButtonMode(); 
                     PathChanged?.Invoke(this, path);
                 }
             }
+        }
+
+        private void DirectoryPathTextBox_MouseLeave(object sender, MouseEventArgs e)
+        {
+            ChangeButtonMode();
         }
     }
 }
