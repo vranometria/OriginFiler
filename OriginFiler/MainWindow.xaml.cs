@@ -76,7 +76,7 @@ namespace OriginFiler
             MenuItem addItem = new() { Header = "Add" };
             addItem.Click += delegate(object sender, RoutedEventArgs e) 
             {
-                InputWindow inputWindow = new InputWindow();
+                InputWindow inputWindow = new() { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
                 bool? result = inputWindow.ShowDialog();
                 if (result == true)
                 {
@@ -252,7 +252,7 @@ namespace OriginFiler
         /// <param name="e"></param>
         private void TreeViewAddMenu_Click(object sender, RoutedEventArgs e)
         {
-            InputWindow inputWindow = new InputWindow();
+            InputWindow inputWindow = new() { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner, };
             bool? result = inputWindow.ShowDialog();
             if (result == true)
             {
@@ -301,7 +301,7 @@ namespace OriginFiler
         /// <param name="e"></param>
         private void HotkeyMenu_Click(object sender, RoutedEventArgs e)
         {
-            HotkeyWindow hotkeyWindow = new HotkeyWindow(AppDataManager.Hotkey, HotkeyHelper);
+            HotkeyWindow hotkeyWindow = new(AppDataManager.Hotkey, HotkeyHelper) { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
             hotkeyWindow.ShowDialog();
             if(hotkeyWindow.IsApply)
             {

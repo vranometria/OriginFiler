@@ -199,6 +199,8 @@ namespace OriginFiler.Views
             InputBoxWindow window = new()
             {
                 Title = "New Folder",
+                Owner = Application.Current.MainWindow,
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
             };
             if (window.ShowDialog() == true)
             {
