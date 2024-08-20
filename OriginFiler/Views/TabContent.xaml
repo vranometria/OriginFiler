@@ -11,6 +11,7 @@
             <ListView.ContextMenu>
                 <ContextMenu>
                     <MenuItem Header="Open Explore" x:Name="OpenExploreMenuItem" Click="OpenExploreMenuitem_Click"></MenuItem>
+                    <MenuItem Header="New Folder" x:Name="NewFolderMenuItem" Click="NewFolderMenuItem_Click"></MenuItem>
                 </ContextMenu>
             </ListView.ContextMenu>
             <ListView.View>

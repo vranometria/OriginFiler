@@ -193,5 +193,23 @@ namespace OriginFiler.Views
         {
             ChangeFolder(HomeFolderPath);
         }
+
+        private void NewFolderMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            InputBoxWindow window = new()
+            {
+                Title = "New Folder",
+            };
+            if (window.ShowDialog() == true)
+            {
+                string newFolderName = window.InputText;
+                string newFolderPath = Path.Combine(FolderPath, newFolderName);
+                if (!Directory.Exists(newFolderPath))
+                {
+                    Directory.CreateDirectory(newFolderPath);
+                    Reload();
+                }
+            }
+        }
     }
 }
