@@ -8,6 +8,7 @@ using System.IO;
 using System.Windows.Controls;
 using System.Windows;
 using System.Text.Json.Serialization;
+using System.Runtime.Serialization;
 
 namespace OriginFiler
 {
@@ -138,6 +139,25 @@ namespace OriginFiler
         {
             AppDataManager appDataManager = AppDataManager.Instance;
             appDataManager.AddFavarite(new Favarite() { Label = Path.GetFileName(path), Path = path });
+        }
+
+        /// <summary>
+        /// オブジェクトのディープコピーを作成する
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public static T DeepCopy<T>(T obj)
+        {
+            using MemoryStream ms = new MemoryStream();
+            DataContractSerializer serializer = new(typeof(Favarite));
+            serializer.WriteObject(ms, obj);
+            ms.Position = 0;
+            T? test = (T?)serializer.ReadObject(ms);
+            if (test == null) { throw new Exception("コピー失敗"); }
+
+            return (T)test;
         }
     }
 }

@@ -226,7 +226,7 @@ namespace OriginFiler
         {
             LoadData();
 
-            AppDataManager.FavariteAdded += (sender, e) => { ListFavariteMenus(); };
+            AppDataManager.FavariteChanged += (sender, e) => { ListFavariteMenus(); };
 
             HotkeyEvent = (sender, e) =>
             {
@@ -340,6 +340,15 @@ namespace OriginFiler
             {
                 string path = openFileDialog.FileName;
                 Util.AddFavarite(path);
+            }
+        }
+
+        private void EditFavariteMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            EditFavariteWindow window = new() { Owner = this, WindowStartupLocation = WindowStartupLocation.CenterOwner };
+            if (window.ShowDialog() == true)
+            {
+                AppDataManager.Favarites = window.EditedFavarites;
             }
         }
     }

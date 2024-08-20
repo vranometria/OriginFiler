@@ -1,0 +1,31 @@
+﻿<Window x:Class="OriginFiler.Views.EditFavariteWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:OriginFiler.Views"
+        mc:Ignorable="d"
+        Title="Edit Favarite" Height="477" Width="800" Loaded="Window_Loaded">
+    <Grid>
+        <ListBox x:Name="FavariteList" Margin="10,10,421,62" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="FavariteList_SelectionChanged"/>
+        <Grid HorizontalAlignment="Right" Margin="0,10,374,62" Width="42">
+            <Button x:Name="UpperButton" Content="⬆️" Height="25" Margin="10,10,10,0" VerticalAlignment="Top" Background="White" Click="UpperButton_Click"/>
+            <Button x:Name="LowerButton" Content="⬇️" Height="25" Margin="10,40,10,0" VerticalAlignment="Top" Background="White" Click="LowerButton_Click"/>
+            <Button x:Name="DeleteButton" Content="✖" Height="25" Margin="10,0,10,10" VerticalAlignment="Bottom" Background="White" Click="DeleteButton_Click"/>
+        </Grid>
+        <Grid Margin="10,404,10,0" Height="47" VerticalAlignment="Top">
+            <Button x:Name="OKButton" Content="OK" Margin="0,11,58,10" Background="White" Click="OKButton_Click" HorizontalAlignment="Right" Width="43"/>
+            <Button x:Name="CancelButton" Content="Cancel" Margin="0,11,10,10" Background="White" HorizontalAlignment="Right" Width="43"/>
+        </Grid>
+        <Grid Margin="0,10,10,62" HorizontalAlignment="Right" Width="359">
+            <Grid Height="44" Margin="10,10,10,0" VerticalAlignment="Top">
+                <TextBox x:Name="EditLabelTextBox" Height="22" Margin="53,0,9,0" TextWrapping="Wrap" Text="" VerticalAlignment="Center"/>
+                <Label Content="Label" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+            </Grid>
+            <Grid Height="46" Margin="10,59,10,0" VerticalAlignment="Top">
+                <Button x:Name="ApplyButton" Content="Apply" HorizontalAlignment="Left" Height="27" Margin="274,10,0,0" VerticalAlignment="Top" Width="55" Background="White" Click="ApplyButton_Click"/>
+            </Grid>
+        </Grid>
+
+    </Grid>
+</Window>

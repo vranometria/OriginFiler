@@ -28,11 +28,19 @@ namespace OriginFiler
         /// <summary>
         /// お気に入りが追加されたときに発生します。
         /// </summary>
-        public event EventHandler? FavariteAdded;
+        public event EventHandler? FavariteChanged;
 
         public List<HierarchyInfo> Hierarchies => AppData.Hierarchies;
 
-        public List<Favarite> Favarites => AppData.Favarites;
+        public List<Favarite> Favarites 
+        {
+            get => AppData.Favarites;
+            set 
+            {
+                AppData.Favarites = value;
+                FavariteChanged?.Invoke(this, new FavariteAddedEventArgs(value.Last()));
+            }
+        }
 
         public Hotkey Hotkey
         {
@@ -64,7 +72,7 @@ namespace OriginFiler
         internal void AddFavarite(Favarite favarite)
         {
             AppData.Favarites.Add(favarite);
-            FavariteAdded?.Invoke(this, new FavariteAddedEventArgs(favarite));
+            FavariteChanged?.Invoke(this, new FavariteAddedEventArgs(favarite));
         }
 
         internal bool IsRegisteredFavarite(string objectPath)
